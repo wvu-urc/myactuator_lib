@@ -41,20 +41,20 @@ class MyActuatorMotor():
         rpm_integer = np.int32(rpm / .01)
 
         can_data = [0xA2, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
-        can_data[4:7] = self.int32_to_uint8(rpm_integer)
+        can_data[4:7] = int32_to_uint8(rpm_integer)
 
         return can.Message(
-            arbitration_id = self.arbitration_id,
+            arbitration_id=self.arbitration_id,
             is_extended_id = self.is_extended_id,
-            data = can_data
+            data= can_data
             )
 
     
 
-    def int32_to_uint8(self,byte_32):
-        byte_3 = (byte_32 >> 24)
-        byte_2 = (byte_32 >> 16) & 0xFF
-        byte_1 =  (byte_32 >> 8) & 0xFF
-        byte_0 = byte_32 & 0xFF
-        bytes = np.array([byte_0, byte_1, byte_2, byte_3], dtype=np.uint8)   # Ensure returned list is in uint8
-        return bytes
+def int32_to_uint8(self,byte_32):
+    byte_3 = (byte_32 >> 24)
+    byte_2 = (byte_32 >> 16) & 0xFF
+    byte_1 =  (byte_32 >> 8) & 0xFF
+    byte_0 = byte_32 & 0xFF
+    bytes = np.array([byte_0, byte_1, byte_2, byte_3], dtype=np.uint8)   # Ensure returned list is in uint8
+    return bytes
