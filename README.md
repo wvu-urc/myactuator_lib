@@ -1,1 +1,1 @@
-# This library is for direct device interfacing for the myactuator motors 
+# This library is used to generate CAN messages that can be sent to MyActuator motors
