@@ -2,7 +2,7 @@
 import can
 from myactuator_lib.can_data import CanDataParameter, CanData
 
-class _Motor():
+class Motor():
 
 	def __init__(self, arbitration_id: int):
 		minimum_id = 0x141
@@ -238,6 +238,4 @@ class _Motor():
 	# 	self._create_can_message(can_data_constructor)
 
 
-class Motor():
-	def __init__(self, arbitration_id: int):
-		super().__init__(arbitration_id)
+

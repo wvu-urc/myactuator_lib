@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="myactuator_lib",
-    version="1.5.0",
+    version="2.0.0",
     packages=find_packages(),
     install_requires=[
         'python-can','numpy'
