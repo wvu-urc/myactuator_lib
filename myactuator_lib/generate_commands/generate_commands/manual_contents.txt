@@ -863,7 +863,7 @@ DATA[1] NULL 0x00
 DATA[2] NULL 0x00
 DATA[3] NULL 0x00
 27
-DATA[4] Encoder zero bias low byte 1 DATA[4] = (uint8_t)(encoderOffset)
+DATA[4] Encoder Offset Byte1 DATA[4] = (uint8_t)(encoderOffset)
 DATA[5] Encoder Offset Byte2 DATA[5] = (uint8_t)(encoderOffset>>8)
 DATA[6] Encoder Offset Byte3 DATA[6] = (uint8_t)(encoderOffset>>8)
 DATA[7] Encoder Offset Byte4 DATA[7] = (uint8_t)(encoderOffset>>8)
