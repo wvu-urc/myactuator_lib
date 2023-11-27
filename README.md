@@ -30,7 +30,7 @@ The `CanDataParameter` classs handle the creation of a single data field found w
 - ```bash
   cd myactuator_lib
   ```
-### 3. Install the library
+### 3. Install the pip package
 - ```bash 
   pip install . 
   ```
