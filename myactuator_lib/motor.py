@@ -8,21 +8,21 @@ class Motor():
 		minimum_id = 0x141
 		maximum_id = 0x172
 
-		if (minimum_id < arbitration_id < maximum_id): 
+		if (minimum_id <= arbitration_id <= maximum_id): 
 			self.arbitration_id = arbitration_id
 		else:
-			raise ValueError(f"The arbitration id {arbitration_id} is invalid")
+			raise ValueError(f"The arbitration id {arbitration_id} is invalid. Only values from {minimum_id} to {maximum_id} inclusive are valid.")
 
 	def _create_can_message(self, created_can_data: CanData) -> can.Message:
 
 		can_data = created_can_data.byte_array
 
-		if not (len(can_data) == 7): # need to populate 7 bytes only, check
-			raise ValueError
+		if not (len(can_data) == 8): # need to populate 8 bytes only, check
+			raise ValueError(f"CAN length {len(can_data)} is not 8. Data is {can_data}")
 
 		for byte in can_data:
 			if not (0x00 <= byte <= 0xFF): # int not guaranteed to be within range of hex byte, check
-				raise ValueError
+				raise ValueError(f"{byte} is not within bounds of a hex byte")
 
 		return can.Message(
 			arbitration_id = self.arbitration_id,
@@ -151,10 +151,8 @@ class Motor():
 		speed_control = speed_control_degrees_per_second * 100 # actual speed is 0.01dps/LSB
 		can_parameters = []
 		can_parameters.append(CanDataParameter(speed_control,(0,32767),4,4))
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0xA2 
-		can_data_constructor.parameter_list = can_parameters
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0xA2, can_parameters)
+		return self._create_can_message(can_data_constructor)
 
 	def Absolute_position_closed_loop_control_command(self, speed_limit, position_control) -> can.Message:
 		can_parameters = []
