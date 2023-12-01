@@ -8,10 +8,10 @@ class Motor():
 		minimum_id = 0x141
 		maximum_id = 0x172
 
-		if (minimum_id < arbitration_id < maximum_id): 
+		if (minimum_id <= arbitration_id <= maximum_id): 
 			self.arbitration_id = arbitration_id
 		else:
-			raise ValueError(f"The arbitration id {arbitration_id} is invalid")
+			raise ValueError(f"The arbitration id {arbitration_id} is invalid must be within ({minimum_id},{maximum_id}) (inclusive)")
 
 	def _create_can_message(self, created_can_data: CanData) -> can.Message:
 
