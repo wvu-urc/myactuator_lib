@@ -11,7 +11,7 @@ class Motor():
 		if (minimum_id <= arbitration_id <= maximum_id): 
 			self.arbitration_id = arbitration_id
 		else:
-			raise ValueError(f"The arbitration id {arbitration_id} is invalid. Only values from {minimum_id} to {maximum_id} inclusive are valid.")
+			raise ValueError(f"The arbitration id {arbitration_id} is invalid must be within ({minimum_id},{maximum_id}) (inclusive)")
 
 	def _create_can_message(self, created_can_data: CanData) -> can.Message:
 
