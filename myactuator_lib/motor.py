@@ -150,7 +150,7 @@ class Motor():
 	def Speed_Closed_loop_Control_Command(self, speed_control_degrees_per_second) -> can.Message:
 		speed_control = speed_control_degrees_per_second * 100 # actual speed is 0.01dps/LSB
 		can_parameters = []
-		can_parameters.append(CanDataParameter(speed_control,(0,32767),4,4))
+		can_parameters.append(CanDataParameter(speed_control,(-2147483647,2147483647),4,4))
 		can_data_constructor = CanData(0xA2, can_parameters)
 		return self._create_can_message(can_data_constructor)
 

@@ -9,7 +9,7 @@ class CanDataParameter:
 
     def _validate_decimal_value(self, decimal_value, allowable_range):
         if decimal_value < allowable_range[0] or decimal_value > allowable_range[1]:
-            raise ValueError(f"Decimal value must be in the range {allowable_range}")
+            raise ValueError(f"Decimal value {decimal_value} must be in the range {allowable_range}")
         return decimal_value
 
     def _calculate_byte_array(self):
