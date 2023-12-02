@@ -22,7 +22,7 @@ class Motor():
 
 		for byte in can_data:
 			if not (0x00 <= byte <= 0xFF): # int not guaranteed to be within range of hex byte, check
-				raise ValueError(f"{byte} is not within bounds of a hex byte")
+				raise ValueError(f"{byte} is not within the bounds of a hex byte")
 
 		return can.Message(
 			arbitration_id = self.arbitration_id,
@@ -30,10 +30,8 @@ class Motor():
 			data = can_data)
 
 	def Read_PID_parameter_command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x30 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x30,[])
+		return self._create_can_message(can_data_constructor)
 
 	def Write_PID_parameters_to_RAM_command(self, current_P_gain, current_I_gain, speed_P_gain, speed_I_gain, pos_P_gain, pos_I_gain) -> can.Message:
 		range_vals = (0,256)
@@ -44,11 +42,8 @@ class Motor():
 		can_parameters.append(CanDataParameter(speed_I_gain,range_vals,5,1))
 		can_parameters.append(CanDataParameter(pos_P_gain,range_vals,6,1))
 		can_parameters.append(CanDataParameter(pos_I_gain,range_vals,7,1))
-
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x31 
-		can_data_constructor.parameter_list = can_parameters
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x31,can_parameters)
+		return self._create_can_message(can_data_constructor)
 
 	def Write_PID_parameters_to_ROM_command(self, current_P_gain, current_I_gain, speed_P_gain, speed_I_gain, pos_P_gain, pos_I_gain) -> can.Message:
 		range_vals = (0,256)
@@ -59,93 +54,64 @@ class Motor():
 		can_parameters.append(CanDataParameter(speed_I_gain,range_vals,5,1))
 		can_parameters.append(CanDataParameter(pos_P_gain,range_vals,6,1))
 		can_parameters.append(CanDataParameter(pos_I_gain,range_vals,7,1))
-
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x32 
-		can_data_constructor.parameter_list = can_parameters
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x32,can_parameters)
+		return self._create_can_message(can_data_constructor)
 
 	def Read_acceleration_command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x42 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x42,[])
+		return self._create_can_message(can_data_constructor)
 
 	def Write_acceleration_to_RAM_and_ROM_command(self, acceleration_degrees_per_sec_per_sec) -> can.Message:
 		can_parameters = []
 		can_parameters.append(CanDataParameter(acceleration_degrees_per_sec_per_sec,(100,60000),2,1))
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x43 
-		can_data_constructor.parameter_list = can_parameters
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x43,can_parameters)
+		return self._create_can_message(can_data_constructor)
 
 	def Read_multi_turn_encoder_position_data_command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x60 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData( 0x60 ,[])
+		return self._create_can_message(can_data_constructor)
 
 	def Read_multi_turn_encoder_zero_offset_data_command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x62 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x62,[])	
+		return self._create_can_message(can_data_constructor)
 
 	def Read_single_turn_encoder_command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x90 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x90 ,[])
+		return self._create_can_message(can_data_constructor)
 
 	def Read_multi_turn_angle_command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x92 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x92 ,[])
+		return self._create_can_message(can_data_constructor)
 
 	def Read_single_turn_angle_command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x94 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x94,[])
+		return self._create_can_message(can_data_constructor)
 
 	def Read_Motor_Status_1_and_Error_Flag_Command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x9A 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x9A ,[])
+		return self._create_can_message(can_data_constructor)
 
 	def Read_Motor_Status_2_Command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x9C 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x9C,[])
+		return self._create_can_message(can_data_constructor)
 
 	def Read_Motor_Status_3_Command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x9D 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x9D ,[])
+		return self._create_can_message(can_data_constructor)
 
 	def Motor_shutdown_command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x80 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x80,[])
+		return self._create_can_message(can_data_constructor)
 
 	def Motor_stop_command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x81 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x81,[])
+		return self._create_can_message(can_data_constructor)
 
 	def Torque_closed_loop_control_command(self, torque_current_mA) -> can.Message:
 		can_parameters = []
 		can_parameters.append(CanDataParameter(torque_current_mA,(0,32767),4,2))
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0xA1 
-		can_data_constructor.parameter_list = can_parameters
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0xA1,can_parameters)
+		return self._create_can_message(can_data_constructor)
 
 	def Speed_Closed_loop_Control_Command(self, speed_control_degrees_per_second) -> can.Message:
 		speed_control = speed_control_degrees_per_second * 100 # actual speed is 0.01dps/LSB
@@ -158,82 +124,57 @@ class Motor():
 		can_parameters = []
 		can_parameters.append(CanDataParameter(speed_limit,(0,32767),2,2))
 		can_parameters.append(CanDataParameter(position_control,(0,32767),4,4))
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0xA4 
-		can_data_constructor.parameter_list = can_parameters
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0xA4,can_parameters)
+		return self._create_can_message(can_data_constructor)
 
 	def Single_turn_position_control_command(self, rotation_direction, speed_limit, position_control) -> can.Message:
 		can_parameters = []
 		can_parameters.append(CanDataParameter(rotation_direction,(0,1),1,1))
 		can_parameters.append(CanDataParameter(speed_limit,(0,35999),2,2))
 		can_parameters.append(CanDataParameter(position_control,(0,35999),4,2))
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0xA6 
-		can_data_constructor.parameter_list = can_parameters
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0xA6,can_parameters)
+		return self._create_can_message(can_data_constructor)
 
 	def System_operating_mode_acquisition(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x70 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x70 ,[])
+		return self._create_can_message(can_data_constructor)
 
 	def Motor_power_acquisition(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x71 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x71,[])
+		return self._create_can_message(can_data_constructor)
 
 	def System_reset_command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x76 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x76,[])
+		return self._create_can_message(can_data_constructor)
 
 	def System_brake_release_command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x77 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x77,[])
+		return self._create_can_message(can_data_constructor)
 
 	def System_brake_lock_command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0x78 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0x78,[])	
+		return self._create_can_message(can_data_constructor)
 
 	def System_runtime_read_command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0xB1 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0xB1,[])
+		return self._create_can_message(can_data_constructor)
 
 	def System_software_version_date_read_command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0xB2 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0xB2,[])
+		return self._create_can_message(can_data_constructor)
 
 	def Communication_baud_rate_setting_command(self, baudrate) -> can.Message:
 		can_parameters = []
 		can_parameters.append(CanDataParameter(baudrate,(0,1),7,1))
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0xB4 
-		can_data_constructor.parameter_list = can_parameters
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0xB4,can_parameters)
+		return self._create_can_message(can_data_constructor)
 
 	def Motor_model_reading_command(self) -> can.Message:
-		can_data_constructor = CanData()
-		can_data_constructor.initial_byte = 0xB5 
-		can_data_constructor.parameter_list = []
-		self._create_can_message(can_data_constructor)
+		can_data_constructor = CanData(0xB5,[])
+		return self._create_can_message(can_data_constructor)
 
 	# def Function_control_command(self, can_parameters: list[CanDataParameter]) -> can.Message:
 	# 	can_data_constructor = CanData()
 	# 	can_data_constructor.initial_byte = 0x20 
 	# 	can_data_constructor.parameter_list = can_parameters
 	# 	self._create_can_message(can_data_constructor)
-
-
-
