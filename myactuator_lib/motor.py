@@ -5,7 +5,7 @@ from myactuator_lib.can_data import CanDataParameter, CanData
 class Motor():
 
 	def __init__(self, arbitration_id: int):
-		minimum_id = 0x141
+		minimum_id = 0x140
 		maximum_id = 0x172
 
 		if (minimum_id <= arbitration_id <= maximum_id): 

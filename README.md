@@ -42,3 +42,8 @@ motor = myactuator_lib.Motor(0x141)
 can_message = motor.Speed_Closed_loop_Control_Command(600)
 # (now send can message over interface of your choice)
 ```
+
+## Known Limitations
+As of now, all commands should work but many remain untested. The only one 100% confirmed to be functional is the `Speed_Closed_loop_Control_Command()`
+
+The can_test script is mostly functional but has not been modified to be user friendly. It is very much a work in progress but should have enough in place to allow for basic testing of a motor over CAN
